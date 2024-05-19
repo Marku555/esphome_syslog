@@ -22,6 +22,7 @@ CONFIG_SCHEMA = cv.All(
         cv.Optional(CONF_IP_ADDRESS, default="255.255.255.255"): cv.string_strict,
         cv.Optional(CONF_PORT, default=514): cv.port,
         cv.Optional(CONF_ENABLE_LOGGER_MESSAGES, default=True): cv.boolean,
+        cv.Optional(CONF_CLIENT_ID, default="${dev_name}"): cv.string,
         cv.Optional(CONF_STRIP_COLORS, default=True): cv.boolean,
         cv.Optional(CONF_MIN_LEVEL, default="DEBUG"): is_log_level,
     }),
@@ -45,6 +46,7 @@ def to_code(config):
     cg.add(var.set_strip_colors(config[CONF_STRIP_COLORS]))
     cg.add(var.set_server_ip(config[CONF_IP_ADDRESS]))
     cg.add(var.set_server_port(config[CONF_PORT]))
+    cg.add(var.set_client_id(config[CONF_CLIENT_ID]))
     cg.add(var.set_min_log_level(LOG_LEVELS[config[CONF_MIN_LEVEL]]))
 
 @automation.register_action('syslog.log', SyslogLogAction, SYSLOG_LOG_ACTION_SCHEMA)
